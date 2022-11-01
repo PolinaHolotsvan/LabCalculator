@@ -92,6 +92,7 @@
             // 
             // HelpBtn
             // 
+            this.HelpBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.HelpBtn.Location = new System.Drawing.Point(1071, 540);
             this.HelpBtn.Name = "HelpBtn";
             this.HelpBtn.Size = new System.Drawing.Size(94, 29);
@@ -102,6 +103,7 @@
             // 
             // SaveBtn
             // 
+            this.SaveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SaveBtn.Location = new System.Drawing.Point(227, 540);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(94, 29);
@@ -112,6 +114,7 @@
             // 
             // SaveAsBtn
             // 
+            this.SaveAsBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SaveAsBtn.Location = new System.Drawing.Point(112, 540);
             this.SaveAsBtn.Name = "SaveAsBtn";
             this.SaveAsBtn.Size = new System.Drawing.Size(109, 29);
@@ -122,6 +125,9 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 96);
             this.dataGridView1.Name = "dataGridView1";
@@ -134,6 +140,7 @@
             // 
             // OpenBtn
             // 
+            this.OpenBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.OpenBtn.Location = new System.Drawing.Point(12, 540);
             this.OpenBtn.Name = "OpenBtn";
             this.OpenBtn.Size = new System.Drawing.Size(94, 29);
@@ -159,6 +166,7 @@
             // 
             // CalculateBtn
             // 
+            this.CalculateBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CalculateBtn.Location = new System.Drawing.Point(859, 19);
             this.CalculateBtn.Name = "CalculateBtn";
             this.CalculateBtn.Size = new System.Drawing.Size(106, 61);
@@ -169,6 +177,7 @@
             // 
             // ChangeModeBtn
             // 
+            this.ChangeModeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ChangeModeBtn.Location = new System.Drawing.Point(971, 18);
             this.ChangeModeBtn.Name = "ChangeModeBtn";
             this.ChangeModeBtn.Size = new System.Drawing.Size(94, 62);
@@ -206,6 +215,7 @@
             // 
             // RefreshTableBtn
             // 
+            this.RefreshTableBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RefreshTableBtn.Location = new System.Drawing.Point(1071, 18);
             this.RefreshTableBtn.Name = "RefreshTableBtn";
             this.RefreshTableBtn.Size = new System.Drawing.Size(94, 62);
@@ -216,6 +226,7 @@
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(327, 544);
             this.label5.Name = "label5";

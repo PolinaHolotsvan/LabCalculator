@@ -13,13 +13,14 @@ namespace LabCalculator
 
         public Form1()
         {
+
             InitializeComponent();
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
             CreateTable(5, 5);
             dataGridView1.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
         }
-        
+
         private void CreateTable(int col, int row)
         {
             for (int i = 0; i < col; i++) AddColumn();
@@ -32,24 +33,20 @@ namespace LabCalculator
             
         }
 
+        
         private void AddColumn()
         {
             DataGridViewColumn column = new DataGridViewColumn();
             Cell cell = new Cell();
             column.CellTemplate = cell;
-            try
+            column.HeaderText = SetColName();
+            dataGridView1.Columns.Add(column);
+            for (int i = 0; i < dataGridView1.RowCount; i++)
             {
-                column.HeaderText = alphabet[dataGridView1.ColumnCount].ToString();
-                dataGridView1.Columns.Add(column);
-                for (int i = 0; i < dataGridView1.RowCount; i++)
-                {
-                    Cell cell2 = new Cell();
-                    cell2.Name = SetName(i, column.HeaderText);
-                    cells.Add(cell2.Name, cell2);
-                }
+                Cell cell2 = new Cell();
+                cell2.Name = SetName(i, column.HeaderText);
+                cells.Add(cell2.Name, cell2);
             }
-            catch (Exception ex) 
-            { MessageBox.Show("Досягнуто максимальну кількість стовпчиків!"); }
         }
         
 
@@ -88,16 +85,21 @@ namespace LabCalculator
 
         private void DeleteRowBtn_Click(object sender, EventArgs e)
         {
+            DeleteRow();
+        }
+
+        private void DeleteRow()
+        {
             bool canDelete = true;
             List<string> names = new List<string>();
-            for(int i = 0; i < dataGridView1.ColumnCount; i++)
+            for (int i = 0; i < dataGridView1.ColumnCount; i++)
             {
                 string nameTemp = SetName(dataGridView1.RowCount - 1, alphabet[i].ToString());
                 if (cells[nameTemp].referenceFrom.Any())
                 {
                     canDelete = false;
                     MessageBox.Show("Ви не можете видалити цей рядок, значення деяких клітинок застосовуються в формулах!");
-                } 
+                }
                 else names.Add(nameTemp);
             }
             if (canDelete)
@@ -105,12 +107,12 @@ namespace LabCalculator
                 try
                 {
                     int rowNumber = dataGridView1.RowCount;
-                    dataGridView1.Rows.RemoveAt(rowNumber-1);
-                
-                    foreach(string name in names)
+                    dataGridView1.Rows.RemoveAt(rowNumber - 1);
+
+                    foreach (string name in names)
                     {
-                       cells[name].DeleteReferences();
-                       cells.Remove(name);
+                        cells[name].DeleteReferences();
+                        cells.Remove(name);
                     }
                     CellNameLabel.Text = SetName(dataGridView1.SelectedCells[0].RowIndex, dataGridView1.SelectedCells[0].OwningColumn.HeaderText);
                 }
@@ -131,12 +133,17 @@ namespace LabCalculator
 
         private void OpenBtn_Click(object sender, EventArgs e)
         {
+            OpenTable();
+        }
+
+        private void OpenTable()
+        {
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "File|*.txt";
                 openFileDialog.Title = "Оберіть файл";
-            
+
                 if (openFileDialog.ShowDialog() != DialogResult.OK)
                 {
                     MessageBox.Show("Ви не обрали файл!");
@@ -151,9 +158,8 @@ namespace LabCalculator
                 CreateTable(col, row);
                 OpenFile(row, col, streamReader);
                 streamReader.Close();
-                }
+            }
             catch (Exception ex) { MessageBox.Show("Помилка під час відкриття файлу!"); }
-
         }
 
         private void OpenFile(int row, int col, StreamReader streamreader)
@@ -178,6 +184,11 @@ namespace LabCalculator
         }
         private void SaveBtn_Click(object sender, EventArgs e)
         {
+            SaveAsBtnF();
+        }
+
+        private void SaveBtnF()
+        {
             try
             {
                 if (path != "")
@@ -189,10 +200,14 @@ namespace LabCalculator
                 else MessageBox.Show("Файл ще не збережено!");
             }
             catch (Exception ex) { MessageBox.Show("Помилка під час збереження!"); }
-            
         }
 
         private void SaveAsBtn_Click(object sender, EventArgs e)
+        {
+
+            SaveAsBtnF();
+        }
+        private void SaveAsBtnF()
         {
             try
             {
@@ -210,9 +225,7 @@ namespace LabCalculator
                 }
             }
             catch (Exception ex) { MessageBox.Show("Помилка під час збереження!"); }
-
         }
-
         private void Saving(FileStream fileStream) //збереження
         {
             label5.Text = path;
@@ -237,11 +250,15 @@ namespace LabCalculator
 
         private void DeleteCol_Click(object sender, EventArgs e)
         {
+            DeleteCol();
+        }
+        private void DeleteCol()
+        {
             bool canDelete = true;
             List<string> names = new List<string>();
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
-                string nameTemp = SetName(i, alphabet[dataGridView1.ColumnCount-1].ToString());
+                string nameTemp = SetName(i, alphabet[dataGridView1.ColumnCount - 1].ToString());
                 if (cells[nameTemp].referenceFrom.Any())
                 {
                     canDelete = false;
@@ -263,7 +280,7 @@ namespace LabCalculator
                     }
                     CellNameLabel.Text = SetName(dataGridView1.SelectedCells[0].RowIndex, dataGridView1.SelectedCells[0].OwningColumn.HeaderText);
                 }
-                catch(Exception ex) { MessageBox.Show("Схоже, таблиця порожня..."); }
+                catch (Exception ex) { MessageBox.Show("Схоже, таблиця порожня..."); }
 
             }
         }
@@ -281,6 +298,10 @@ namespace LabCalculator
 
         private void CalculateBtn_Click(object sender, EventArgs e)
         {
+            Calculate();
+        }
+        public void Calculate()
+        {
             if (dataGridView1.SelectedCells.Count == 0)
             {
                 MessageBox.Show("Нема клітинок!");
@@ -292,7 +313,7 @@ namespace LabCalculator
                 return;
             }
             try
-                {
+            {
                 string temp = SetName(dataGridView1.SelectedCells[0].RowIndex, dataGridView1.SelectedCells[0].OwningColumn.HeaderText);
                 if (CanConvertRefFormula(FormulaTextBox.Text, temp))
                 {
@@ -300,7 +321,7 @@ namespace LabCalculator
                     string form = FormulaToExpression(FormulaTextBox.Text, temp);
                     var res = Calculator.Evaluate(form);
                     AddReferences(FormulaTextBox.Text, temp);
-            
+
                     cells[temp].Value = res.ToString();
                     cells[temp].Formula = FormulaTextBox.Text;
                     RefreshCells(temp);
@@ -312,16 +333,33 @@ namespace LabCalculator
             }
             catch (ArgumentException ex) { MessageBox.Show("Некоректна формула!"); }
             catch (DivideByZeroException ex2) { MessageBox.Show("Не можна ділити на 0!"); }
-            
+
             FormulaTextBox.Clear();
-
         }
-
         private string SetName(int row, string col)
         {
             return col + (row.ToString());
         }
 
+        private string SetColName()
+        {
+            int col1 = dataGridView1.ColumnCount;
+            string name = "";
+            if(col1 == 0)
+            {
+                int col2 = col1 % 26;
+                col1 /= 26;
+                name += alphabet[col2].ToString();
+                return name;
+            }
+            while(col1 > 0)
+            {
+                int col2 = col1 % 26;
+                col1 /= 26;
+                name=alphabet[col2].ToString()+name;
+            }
+            return name;
+        }
         private string FormulaToExpression(string formula, string name) //перетворення формули на математичний вираз
         {
             Regex regex = new Regex(refPatern, RegexOptions.IgnoreCase);
@@ -368,14 +406,17 @@ namespace LabCalculator
        
         private void HelpBtn_Click(object sender, EventArgs e)
         {
+            Help();
+        }
+
+        private void Help()
+        {
             MessageBox.Show($"Голоцван Поліна К-27 варіант 7{Environment.NewLine}" +
                 $"Таблиця підтримує обчислення операцій +, -, *, /, mod, dіv, ^(піднесення у степінь), mmax(x1, x2, ..., xN), mmіn(x1, x2, ..., xN)(N >= 1). Щоб ввести інформацію, потрібно обрати необхідну клітинку, записати вираз в textBox, натиснути кнопку Розрахунок.{Environment.NewLine}" +
                 $"Змінити режим: Відображення інформації в таблиці підтримує два режими: ВИРАЗ / ЗНАЧЕННЯ. Натиснувши цю кнопку можна змінити режим відображення{Environment.NewLine}" +
                 $"Очистити таблицю: видаляє таблицю, створює нову розмірами 5x5.{Environment.NewLine}" +
-                $"Максимальна допустима кількість стовпчиків 26.{Environment.NewLine}" +
                 $"Зберегти: Не можна зберегти файл, якщо до цього він не був збережений як.");
         }
-
 
         private void RefreshValueTable()
         {
@@ -396,11 +437,17 @@ namespace LabCalculator
 
         private void ChangeModeBtn_Click(object sender, EventArgs e)
         {
+            ChangeMode();
+        }
+
+        private void ChangeMode()
+        {
             if (mode == "value")
             {
                 mode = "formula";
                 RefreshFormulaTable();
-;           }
+                ;
+            }
             else
             if (mode == "formula")
             {
@@ -408,7 +455,6 @@ namespace LabCalculator
                 RefreshValueTable();
             }
         }
-
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -425,6 +471,10 @@ namespace LabCalculator
             dataGridView1.Columns.Clear();
         }
         private void RefreshTableBtn_Click(object sender, EventArgs e)
+        {
+            RefreshTable();
+        }
+        private void RefreshTable()
         {
             DeleteTable();
             CreateTable(5, 5);
