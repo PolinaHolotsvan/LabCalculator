@@ -44,8 +44,13 @@ public override double VisitCompileUnit(LabCalculatorParser.CompileUnitContext c
         {
             var left = WalkLeft(context);
             var right = WalkRight(context);
-            Debug.WriteLine("{0}^{1}", left, right);
-            return System.Math.Pow(left, right);
+            if (right <=0 && left==0) throw new DivideByZeroException();
+            else
+            {
+                Debug.WriteLine("{0}^{1}", left, right);
+                return System.Math.Pow(left, right);
+            }
+            
         }
         public override double VisitAdditiveExpr(LabCalculatorParser.AdditiveExprContext context)
         {
